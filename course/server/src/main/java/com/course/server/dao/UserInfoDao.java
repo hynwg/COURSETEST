@@ -1,6 +1,7 @@
-package com.course.system.dao;
+package com.course.server.dao;
 
-import com.course.system.entity.UserInfo;
+
+import com.course.server.entity.UserInfo;
 
 import java.util.List;
 

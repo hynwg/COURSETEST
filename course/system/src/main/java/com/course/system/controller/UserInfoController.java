@@ -1,7 +1,7 @@
 package com.course.system.controller;
 
-import com.course.system.entity.UserInfo;
-import com.course.system.service.UserInfoService;
+import com.course.server.entity.UserInfo;
+import com.course.server.service.UserInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
