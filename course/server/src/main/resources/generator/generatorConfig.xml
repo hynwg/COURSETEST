@@ -38,7 +38,8 @@
         <javaClientGenerator targetProject="src\main\java"
                              targetPackage="com.course.server.dao"
                              type="XMLMAPPER" />
-        <table tableName="course" domainObjectName="Course"/>
+<!--        <table tableName="course" domainObjectName="Course"/>-->
+        <table tableName="chapter" domainObjectName="Chapter"/>
     </context>
 <!--    mybatis-generator.generate -e-->
 </generatorConfiguration>

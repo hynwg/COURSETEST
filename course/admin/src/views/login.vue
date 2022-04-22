@@ -10,7 +10,6 @@
                 <span class="red">控台登陆</span>
                 <!--                <span class="white" id="id-text2">Application</span>-->
               </h1>
-              <h4 class="blue" id="id-company-text">&copy; Company Name</h4>
             </div>
 
             <div class="space-6"></div>
@@ -50,9 +49,12 @@
                             <span class="lbl"> 记住我</span>
                           </label>
 
-                          <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                          <button type="button"
+                                  class="width-35 pull-right btn btn-sm btn-primary"
+                                  v-on:click="login()"
+                          >
                             <i class="ace-icon fa fa-key"></i>
-                            <span class="bigger-110">登陆</span>
+                            <span class="bigger-110">登录</span>
                           </button>
                         </div>
 
@@ -60,22 +62,6 @@
                       </fieldset>
                     </form>
 
-
-                    <div class="toolbar clearfix">
-                      <div>
-                        <a href="#" data-target="#forgot-box" class="forgot-password-link">
-                          <i class="ace-icon fa fa-arrow-left"></i>
-                          忘记密码
-                        </a>
-                      </div>
-
-                      <div>
-                        <a href="#" data-target="#signup-box" class="user-signup-link">
-                          注册
-                          <i class="ace-icon fa fa-arrow-right"></i>
-                        </a>
-                      </div>
-                    </div>
                   </div><!-- /.widget-body -->
                 </div><!-- /.login-box -->
 
@@ -92,9 +78,18 @@
 </template>
 
 <script>
-$('body').attr('class', 'login-layout light-login');
+import $ from 'jquery'
 export default {
-  name: 'App',
+  name: "login",
+  mounted:function () {
+    $('body').removeClass('no-skin');
+    $('body').attr('class', 'login-layout light-login');
+  },
+  methods:{
+    login(){
+      this.$router.push("/admin")
+    }
+  }
 }
 </script>
 
