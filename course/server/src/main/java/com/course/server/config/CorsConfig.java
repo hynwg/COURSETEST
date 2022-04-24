@@ -7,11 +7,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
-
+//如果使用网关，配置写到gateway的启动类，配置到网关层
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOriginPatterns("*")
-//                .allowedOrigins("*")
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
+   //               .allowedOrigins("*")
                 .allowedHeaders(CorsConfiguration.ALL)
                 .allowedMethods(CorsConfiguration.ALL)
                 .allowCredentials(true)
