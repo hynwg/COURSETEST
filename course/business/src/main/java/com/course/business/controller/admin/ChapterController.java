@@ -1,4 +1,4 @@
-package com.course.business.controller;
+package com.course.business.controller.admin;
 
 import com.course.server.entity.Chapter;
 import com.course.server.entity.ChapterExample;
@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/chapter")
+@RequestMapping("/admin/chapter")
 public class ChapterController {
     @Resource
     private ChapterService chapterService;
