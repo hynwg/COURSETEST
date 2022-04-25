@@ -497,14 +497,8 @@ export default {
         // sidebar激活样式方法二
         console.log("---->页面跳转：", val, oldVal);
         let _this = this;
-        //
-        // if (!_this.hasResourceRouter(val.name)) {
-        //   _this.$router.push("/login");
-        //   return;
-        // }
-
         _this.$nextTick(function(){  //页面加载完成后执行
-          _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+          //_this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
         })
       }
     }
