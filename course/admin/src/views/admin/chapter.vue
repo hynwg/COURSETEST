@@ -88,7 +88,7 @@
       </tbody>
     </table>
 
-    <div class="modal fade" tabindex="-1" role="dialog">
+    <div id="form-modal"  class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -101,13 +101,13 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">名称</label>
                 <div class="col-sm-10">
-                  <input  class="form-control" placeholder="名称">
+                  <input  v-model="chapter.name"   class="form-control" placeholder="名称">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">课程ID</label>
                 <div class="col-sm-10">
-                  <input  class="form-control" placeholder="课程ID">
+                  <input  v-model="chapter.courseId"  class="form-control" placeholder="课程ID">
                 </div>
               </div>
 
@@ -115,7 +115,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary">保存</button>
+            <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -131,6 +131,9 @@ export default {
   processData: false,
   data: function () {
     return {
+      chapter:{
+
+      },
       chapterList: [],
     }
   },
@@ -146,17 +149,9 @@ export default {
     add() {
       let _this = this;
       _this.chapter = {};
-      $(".modal").modal("show");
+      $("#form-modal").modal("show");
     },
 
-    // /**
-    //  * 点击【编辑】
-    //  */
-    // edit(chapter) {
-    //   let _this = this;
-    //   _this.chapter = $.extend({}, chapter);
-    //   $("#form-modal").modal("show");
-    // },
     /**
      * 列表查询
      */
@@ -167,11 +162,23 @@ export default {
         size: _this.$refs.pagination.size,
       }).then((response) => {
         console.log("大章列表", response);
-        _this.chapterList = response.data.list;
-        _this.$refs.pagination.render(page, response.data.total)
+        let resp=response.data;
+        _this.chapterList = resp.content.list;
+        _this.$refs.pagination.render(page, resp.content.total)
       })
-
-
+    },
+    save() {
+      let _this = this;
+      _this.$axios.post('http://127.0.0.1:9002/business/admin/chapter/save',
+        _this.chapter
+      ).then((response) => {
+        console.log("保存大章列表", response);
+        let resp=response.data;
+        if (resp.success){
+          $("#form-modal").modal("hide");
+          _this.query(1);
+        }
+      })
     }
   }
 }

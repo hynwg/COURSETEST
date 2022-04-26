@@ -3,8 +3,10 @@ package com.course.business.controller.admin;
 import com.course.server.service.ChapterService;
 import com.course.server.vo.ChapterVo;
 import com.course.server.vo.PageVo;
+import com.course.server.vo.ResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,10 +23,23 @@ public class ChapterController {
     private static final Logger LOG = LoggerFactory.getLogger(ChapterController.class);
 
     @RequestMapping("/query")
-    public PageVo query(@RequestBody PageVo pageVo) {
-        LOG.info("pageVo:{}",pageVo);
+    public ResponseVo query(@RequestBody PageVo pageVo) {
+        LOG.info("pageVo:{}", pageVo);
+        ResponseVo responseVo = new ResponseVo();
         chapterService.query(pageVo);
-        return pageVo;
+        responseVo.setContent(pageVo);
+        return responseVo;
     }
 
+
+    /**
+     * 保存，id有值时更新，无值时新增
+     */
+    @PostMapping("/save")
+    public ResponseVo save(@RequestBody ChapterVo chapterVo) {
+        ResponseVo responseVo = new ResponseVo();
+        chapterService.save(chapterVo);
+        responseVo.setContent(chapterVo);
+        return responseVo;
+    }
 }

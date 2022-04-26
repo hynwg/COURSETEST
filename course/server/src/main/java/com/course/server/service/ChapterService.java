@@ -9,6 +9,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import util.CopyUtil;
+import util.UuidUtil;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -36,4 +38,27 @@ public class ChapterService {
         }
         pageVo.setList(list);
      }
+    /**
+     * 新增
+     */
+    public void save(ChapterVo  chapterVo) {
+        chapterVo.setId(UuidUtil.getShortUuid());
+        Chapter chapter=new Chapter();
+        BeanUtils.copyProperties(chapterVo,chapter);
+        chapterMapper.insert(chapter);
+    }
+
+    /**
+     * 更新
+     */
+    private void update(Chapter chapter) {
+        chapterMapper.updateByPrimaryKey(chapter);
+    }
+
+    /**
+     * 删除
+     */
+    public void delete(String id) {
+        chapterMapper.deleteByPrimaryKey(id);
+    }
 }
