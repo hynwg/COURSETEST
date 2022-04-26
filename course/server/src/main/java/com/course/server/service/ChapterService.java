@@ -10,8 +10,8 @@ import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import util.CopyUtil;
-import util.UuidUtil;
+import com.course.server.util.CopyUtil;
+import com.course.server.util.UuidUtil;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

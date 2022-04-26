@@ -1,4 +1,4 @@
-package com.course.business.controller;
+package com.course.business.controller.admin;
 
 import com.course.server.entity.UserInfo;
 import com.course.server.service.UserInfoService;

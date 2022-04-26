@@ -1,4 +1,4 @@
-package util;
+package com.course.server.util;
 
 import java.util.UUID;
 

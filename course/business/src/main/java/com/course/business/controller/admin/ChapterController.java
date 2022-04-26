@@ -7,9 +7,9 @@ import com.course.server.vo.ResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import com.course.server.util.ValidatorUtil;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin/chapter")
@@ -34,6 +34,11 @@ public class ChapterController {
      */
     @PostMapping("/save")
     public ResponseVo save(@RequestBody ChapterVo chapterVo) {
+        // 保存校验
+        ValidatorUtil.require(chapterVo.getName(), "名称");
+        ValidatorUtil.require(chapterVo.getCourseId(), "课程ID");
+        ValidatorUtil.length(chapterVo.getCourseId(), "课程ID", 1, 8);
+
         ResponseVo responseVo = new ResponseVo();
         chapterService.save(chapterVo);
         responseVo.setContent(chapterVo);
