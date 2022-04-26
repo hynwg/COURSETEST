@@ -82,6 +82,7 @@
 </template>
 <script>
 import Pagination from "../../components/pagination";
+// import toast from "../../components/pagination";
 
 export default {
   components: {Pagination},
@@ -137,6 +138,7 @@ export default {
         if (resp.success) {
           $("#form-modal").modal("hide");
           _this.query(1);
+          Toast.success("保存成功！");
         }
       })
     },
@@ -158,12 +160,13 @@ export default {
             let resp = response.data;
             if (resp.success) {
               _this.query(1);
-              Swal.fire(
-
-                  '删除成功!',
-                  '删除成功！',
-                  'success'
-              )
+              Toast.success("删除成功！");
+              // Swal.fire(
+              //
+              //     '删除成功!',
+              //     '删除成功！',
+              //     'success'
+              // )
             }
           })
 
