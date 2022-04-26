@@ -122,7 +122,8 @@ export default {
         page: page,
         size: _this.$refs.pagination.size,
       }).then((response) => {
-        console.log("大章列表", response);
+        Loading.hide();
+        console.log("查询大章列表", response);
         let resp = response.data;
         _this.chapterList = resp.content.list;
         _this.$refs.pagination.render(page, resp.content.total)
@@ -133,6 +134,7 @@ export default {
       _this.$axios.post('http://127.0.0.1:9002/business/admin/chapter/save',
           _this.chapter
       ).then((response) => {
+        Loading.hide();
         console.log("保存大章列表", response);
         let resp = response.data;
         if (resp.success) {
@@ -144,35 +146,18 @@ export default {
     },
     del(id) {
       let _this = this;
-      Swal.fire({
-        title: '确认删除?',
-        text: "确认删除后不可恢复!",
-        icon: '警告',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '确认',
-        cancelButtonText: '取消'
-      }).then((result) => {
-        if (result.value) {
-          _this.$axios.delete('http://127.0.0.1:9002/business/admin/chapter/delete/' + id).then((response) => {
-            console.log("删除大章列表书记", response);
-            let resp = response.data;
-            if (resp.success) {
-              _this.query(1);
-              Toast.success("删除成功！");
-              // Swal.fire(
-              //
-              //     '删除成功!',
-              //     '删除成功！',
-              //     'success'
-              // )
-            }
-          })
-
-        }
-      })
-
+      Confirm.show("确认删除大章后不可恢复", function () {
+        Loading.show();
+        _this.$axios.delete('http://127.0.0.1:9002/business/admin/chapter/delete/' + id).then((response) => {
+          Loading.hide();
+          console.log("删除大章列表 ", response);
+          let resp = response.data;
+          if (resp.success) {
+            _this.query(1);
+            Toast.success("删除成功！");
+          }
+        })
+      });
     }
   }
 }
