@@ -17,20 +17,20 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = ValidatorException.class)
     @ResponseBody
     public ResponseVo validatorExceptionHandler(ValidatorException e) {
-        ResponseVo responseDto = new ResponseVo();
-        responseDto.setSuccess(false);
+        ResponseVo responseVo = new ResponseVo();
+        responseVo.setSuccess(false);
         LOG.warn(e.getMessage());
-        responseDto.setMessage("请求参数异常！");
-        return responseDto;
+        responseVo.setMessage(e.getMessage());//请求参数异常！
+        return responseVo;
     }
 
     @ExceptionHandler(value = BusinessException.class)
     @ResponseBody
     public ResponseVo businessExceptionHandler(BusinessException e) {
-        ResponseVo responseDto = new ResponseVo();
-        responseDto.setSuccess(false);
+        ResponseVo responseVo = new ResponseVo();
+        responseVo.setSuccess(false);
         LOG.error("业务异常：{}", e.getCode().getDesc());
-        responseDto.setMessage(e.getCode().getDesc());
-        return responseDto;
+        responseVo.setMessage(e.getCode().getDesc());
+        return responseVo;
     }
 }
