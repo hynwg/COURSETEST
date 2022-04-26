@@ -32,55 +32,13 @@
 
         <td>
           <div class="hidden-sm hidden-xs btn-group">
-            <button class="btn btn-xs btn-success">
-              <i class="ace-icon fa fa-check bigger-120"></i>
-            </button>
 
-            <button class="btn btn-xs btn-info">
+            <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
-
-            <button class="btn btn-xs btn-danger">
+            <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
-
-            <button class="btn btn-xs btn-warning">
-              <i class="ace-icon fa fa-flag bigger-120"></i>
-            </button>
-          </div>
-
-          <div class="hidden-md hidden-lg">
-            <div class="inline pos-rel">
-              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-              </button>
-
-              <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                <li>
-                  <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																			<span class="blue">
-																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																			</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																			<span class="green">
-																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																			</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																			<span class="red">
-																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																			</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
           </div>
         </td>
       </tr>
@@ -88,7 +46,7 @@
       </tbody>
     </table>
 
-    <div id="form-modal"  class="modal fade" tabindex="-1" role="dialog">
+    <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -101,13 +59,13 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">名称</label>
                 <div class="col-sm-10">
-                  <input  v-model="chapter.name"   class="form-control" placeholder="名称">
+                  <input v-model="chapter.name" class="form-control" placeholder="名称">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">课程ID</label>
                 <div class="col-sm-10">
-                  <input  v-model="chapter.courseId"  class="form-control" placeholder="课程ID">
+                  <input v-model="chapter.courseId" class="form-control" placeholder="课程ID">
                 </div>
               </div>
 
@@ -131,9 +89,7 @@ export default {
   processData: false,
   data: function () {
     return {
-      chapter:{
-
-      },
+      chapter: {},
       chapterList: [],
     }
   },
@@ -151,7 +107,11 @@ export default {
       _this.chapter = {};
       $("#form-modal").modal("show");
     },
-
+    edit(chapter) {
+      let _this = this;
+      _this.chapter = $.extend({}, chapter);
+      $("#form-modal").modal("show");
+    },
     /**
      * 列表查询
      */
@@ -162,7 +122,7 @@ export default {
         size: _this.$refs.pagination.size,
       }).then((response) => {
         console.log("大章列表", response);
-        let resp=response.data;
+        let resp = response.data;
         _this.chapterList = resp.content.list;
         _this.$refs.pagination.render(page, resp.content.total)
       })
@@ -170,15 +130,46 @@ export default {
     save() {
       let _this = this;
       _this.$axios.post('http://127.0.0.1:9002/business/admin/chapter/save',
-        _this.chapter
+          _this.chapter
       ).then((response) => {
         console.log("保存大章列表", response);
-        let resp=response.data;
-        if (resp.success){
+        let resp = response.data;
+        if (resp.success) {
           $("#form-modal").modal("hide");
           _this.query(1);
         }
       })
+    },
+    del(id) {
+      let _this = this;
+      Swal.fire({
+        title: '确认删除?',
+        text: "确认删除后不可恢复!",
+        icon: '警告',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then((result) => {
+        if (result.value) {
+          _this.$axios.delete('http://127.0.0.1:9002/business/admin/chapter/delete/' + id).then((response) => {
+            console.log("删除大章列表书记", response);
+            let resp = response.data;
+            if (resp.success) {
+              _this.query(1);
+              Swal.fire(
+
+                  '删除成功!',
+                  '删除成功！',
+                  'success'
+              )
+            }
+          })
+
+        }
+      })
+
     }
   }
 }

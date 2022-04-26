@@ -6,10 +6,7 @@ import com.course.server.vo.PageVo;
 import com.course.server.vo.ResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -40,6 +37,16 @@ public class ChapterController {
         ResponseVo responseVo = new ResponseVo();
         chapterService.save(chapterVo);
         responseVo.setContent(chapterVo);
+        return responseVo;
+    }
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseVo delete(@PathVariable String id) {
+        ResponseVo responseVo = new ResponseVo();
+        chapterService.delete(id);
         return responseVo;
     }
 }

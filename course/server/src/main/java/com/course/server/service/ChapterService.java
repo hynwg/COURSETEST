@@ -7,6 +7,7 @@ import com.course.server.vo.ChapterVo;
 import com.course.server.vo.PageVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import util.CopyUtil;
@@ -39,21 +40,22 @@ public class ChapterService {
         pageVo.setList(list);
      }
     /**
-     * 新增
+     * 保存
      */
-    public void save(ChapterVo  chapterVo) {
-        chapterVo.setId(UuidUtil.getShortUuid());
-        Chapter chapter=new Chapter();
-        BeanUtils.copyProperties(chapterVo,chapter);
-        chapterMapper.insert(chapter);
+    public void save(ChapterVo chapterVo) {
+//        chapterVo.setId(UuidUtil.getShortUuid());
+//        Chapter chapter=new Chapter();
+//        BeanUtils.copyProperties(chapterVo,chapter);
+//        chapterMapper.insert(chapter);
+        Chapter chapter = CopyUtil.copy(chapterVo, Chapter.class);
+        if (StringUtil.isEmpty(chapter.getId())) {
+            chapter.setId(UuidUtil.getShortUuid());
+            chapterMapper.insert(chapter);
+        } else {
+            chapterMapper.updateByPrimaryKey(chapter);
+        }
     }
 
-    /**
-     * 更新
-     */
-    private void update(Chapter chapter) {
-        chapterMapper.updateByPrimaryKey(chapter);
-    }
 
     /**
      * 删除
