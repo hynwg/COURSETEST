@@ -1,4 +1,4 @@
-package generator.test;
+package com.course.generator.test;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;

@@ -1,6 +1,6 @@
-package generator.server;
+package com.course.generator.server;
 
-import generator.util.FreemarkerUtil;
+import com.course.generator.util.FreemarkerUtil;
 
 import java.util.*;
 

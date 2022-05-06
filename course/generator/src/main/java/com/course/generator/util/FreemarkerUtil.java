@@ -1,4 +1,4 @@
-package generator.util;
+package com.course.generator.util;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;

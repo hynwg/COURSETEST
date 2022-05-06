@@ -1,4 +1,4 @@
-package generator.util;
+package com.course.generator.util;
 
 public class Field {
     private String name; // 字段名：course_id
