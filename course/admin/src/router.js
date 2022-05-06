@@ -8,6 +8,7 @@ const Login = () => import("./views/login.vue");
 const Admin = () => import("./views/admin.vue");
 const Welcome = () => import("./views/admin/welcome.vue");
 const Chapter = () => import("./views/admin/chapter.vue");
+const Section = () => import("./views/admin/section.vue");
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -25,10 +26,13 @@ const router = createRouter({
                 name: "welcome",
                 component: Welcome,
             }, {
-                //子路由的配置不要'/'开头
                 path: "business/chapter",
                 name: "business/chapter",
                 component: Chapter,
+            }, {
+                path: "business/section",
+                name: "business/section",
+                component: Section,
             }]
         }
     ]

@@ -16,7 +16,7 @@ import com.course.server.util.UuidUtil;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-
+        import java.util.Date;
 
 @Service
 public class SectionService {
@@ -30,8 +30,9 @@ public class SectionService {
      */
     public void query(PageVo pageVo) {
         PageHelper.startPage(pageVo.getPage(), pageVo.getSize());
-        SectionExample example = new SectionExample();
-        List<Section> sectionList = sectionMapper.selectByExample(example);
+        SectionExample  sectionExample= new SectionExample();
+        sectionExample.setOrderByClause("sort asc");
+        List<Section> sectionList = sectionMapper.selectByExample(sectionExample);
         PageInfo<Section> pageInfo = new PageInfo<>(sectionList);
         pageVo.setTotal(pageInfo.getTotal());
 
@@ -53,9 +54,13 @@ public class SectionService {
     public void save(SectionVo sectionVo) {
         Section section = CopyUtil.copy(sectionVo, Section.class);
         if (StringUtil.isEmpty(section.getId())) {
+            Date now = new Date();
+            section.setCreatedAt(now);
+            section.setUpdatedAt(now);
             section.setId(UuidUtil.getShortUuid());
             sectionMapper.insert(section);
         } else {
+            section.setUpdatedAt(new Date());
             sectionMapper.updateByPrimaryKey(section);
         }
     }
