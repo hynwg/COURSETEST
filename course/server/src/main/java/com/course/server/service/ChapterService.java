@@ -23,11 +23,16 @@ public class ChapterService {
     @Resource
     private ChapterMapper chapterMapper;
 
-    public void query(PageVo pageVo ) {
-        PageHelper.startPage(pageVo.getPage(),pageVo.getSize());
-        ChapterExample example=new ChapterExample();
+    /**
+     * 分页查询
+     *
+     * @param pageVo
+     */
+    public void query(PageVo pageVo) {
+        PageHelper.startPage(pageVo.getPage(), pageVo.getSize());
+        ChapterExample example = new ChapterExample();
         List<Chapter> chapterList = chapterMapper.selectByExample(example);
-        PageInfo<Chapter> pageInfo=new PageInfo<>(chapterList);
+        PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
         pageVo.setTotal(pageInfo.getTotal());
 
         List<ChapterVo> list = new ArrayList<>();
@@ -38,15 +43,14 @@ public class ChapterService {
             list.add(chapterVo);
         }
         pageVo.setList(list);
-     }
+    }
+
     /**
      * 保存
+     *
+     * @param chapterVo
      */
     public void save(ChapterVo chapterVo) {
-//        chapterVo.setId(UuidUtil.getShortUuid());
-//        Chapter chapter=new Chapter();
-//        BeanUtils.copyProperties(chapterVo,chapter);
-//        chapterMapper.insert(chapter);
         Chapter chapter = CopyUtil.copy(chapterVo, Chapter.class);
         if (StringUtil.isEmpty(chapter.getId())) {
             chapter.setId(UuidUtil.getShortUuid());
@@ -59,6 +63,8 @@ public class ChapterService {
 
     /**
      * 删除
+     *
+     * @param id
      */
     public void delete(String id) {
         chapterMapper.deleteByPrimaryKey(id);
