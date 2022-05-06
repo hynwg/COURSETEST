@@ -18,7 +18,7 @@ public class ChapterController {
     private ChapterService chapterService;
 
     private static final Logger LOG = LoggerFactory.getLogger(ChapterController.class);
-
+    public static final String BUSINESS_NAME = "大章";
     @RequestMapping("/query")
     public ResponseVo query(@RequestBody PageVo pageVo) {
         LOG.info("pageVo:{}", pageVo);
