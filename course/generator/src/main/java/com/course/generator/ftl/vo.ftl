@@ -3,14 +3,14 @@ package com.course.server.dto;
 <#list typeSet as type>
 <#if type=='Date'>
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.Js onFormat;
 </#if>
 <#if type=='BigDecimal'>
 import java.math.BigDecimal;
 </#if>
 </#list>
 
-public class ${Domain}Dto {
+public class ${Domain}Vo {
 
     <#list fieldList as field>
     /**

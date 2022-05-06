@@ -27,6 +27,18 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yage</groupId>
+            <artifactId>server</artifactId>
+        </dependency>
+
+        <!-- 读xml -->
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+        </dependency>
+
+
 
     </dependencies>
 
