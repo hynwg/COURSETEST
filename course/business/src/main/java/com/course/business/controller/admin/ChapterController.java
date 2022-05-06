@@ -19,6 +19,7 @@ public class ChapterController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ChapterController.class);
     public static final String BUSINESS_NAME = "大章";
+
     @RequestMapping("/query")
     public ResponseVo query(@RequestBody PageVo pageVo) {
         LOG.info("pageVo:{}", pageVo);
@@ -31,6 +32,9 @@ public class ChapterController {
 
     /**
      * 保存，id有值时更新，无值时新增
+     *
+     * @param chapterVo
+     * @return
      */
     @PostMapping("/save")
     public ResponseVo save(@RequestBody ChapterVo chapterVo) {
@@ -47,6 +51,9 @@ public class ChapterController {
 
     /**
      * 删除
+     *
+     * @param id
+     * @return
      */
     @DeleteMapping("/delete/{id}")
     public ResponseVo delete(@PathVariable String id) {

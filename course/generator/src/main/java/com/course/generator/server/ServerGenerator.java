@@ -39,10 +39,11 @@ public class ServerGenerator {
         Map<String, Object> map = new HashMap<>();
         String Domain="Section";
         String domain="section";
+        String tableNameCn = "小节";
         map.put("Domain", Domain);
         map.put("domain", domain);
-//        map.put("tableNameCn", tableNameCn);
-//        map.put("module", module);
+        map.put("tableNameCn", tableNameCn);
+        map.put("module", module);
 //        map.put("fieldList", fieldList);
 //        map.put("typeSet", typeSet);
 
@@ -53,10 +54,10 @@ public class ServerGenerator {
         // 生成service
         FreemarkerUtil.initConfig("service.ftl");
         FreemarkerUtil.generator(toServicePath + Domain + "Service.java", map);
-//
-//        // 生成controller
-//        FreemarkerUtil.initConfig("controller.ftl");
-//        FreemarkerUtil.generator(toControllerPath + Domain + "Controller.java", map);
+
+        // 生成controller
+        FreemarkerUtil.initConfig("controller.ftl");
+        FreemarkerUtil.generator(toControllerPath + Domain + "Controller.java", map);
     }
 
 //    /**

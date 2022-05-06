@@ -1,67 +1,60 @@
 package com.course.${module}.controller.admin;
 
-import com.course.server.dto.${Domain}Dto;
-import com.course.server.dto.PageDto;
-import com.course.server.dto.ResponseDto;
 import com.course.server.service.${Domain}Service;
-import com.course.server.util.ValidatorUtil;
+import com.course.server.vo.${Domain}Vo;
+import com.course.server.vo.PageVo;
+import com.course.server.vo.ResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import com.course.server.util.ValidatorUtil;
 
 import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/admin/${domain}")
 public class ${Domain}Controller {
+    @Resource
+    private ${Domain}Service ${domain}Service;
 
     private static final Logger LOG = LoggerFactory.getLogger(${Domain}Controller.class);
     public static final String BUSINESS_NAME = "${tableNameCn}";
 
-    @Resource
-    private ${Domain}Service ${domain}Service;
-
-    /**
-     * 列表查询
-     */
-    @PostMapping("/list")
-    public ResponseDto list(@RequestBody PageDto pageDto) {
-        ResponseDto responseDto = new ResponseDto();
-        ${domain}Service.list(pageDto);
-        responseDto.setContent(pageDto);
-        return responseDto;
+    @RequestMapping("/query")
+    public ResponseVo query(@RequestBody PageVo pageVo) {
+        LOG.info("pageVo:{}", pageVo);
+        ResponseVo responseVo = new ResponseVo();
+        ${domain}Service.query(pageVo);
+        responseVo.setContent(pageVo);
+        return responseVo;
     }
+
 
     /**
      * 保存，id有值时更新，无值时新增
+     *
+     * @param ${domain}Vo
+     * @return
      */
     @PostMapping("/save")
-    public ResponseDto save(@RequestBody ${Domain}Dto ${domain}Dto) {
-        // 保存校验
-        <#list fieldList as field>
-        <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt" && field.nameHump!="sort">
-            <#if !field.nullAble>
-        ValidatorUtil.require(${domain}Dto.get${field.nameBigHump}(), "${field.nameCn}");
-            </#if>
-            <#if (field.length > 0)>
-        ValidatorUtil.length(${domain}Dto.get${field.nameBigHump}(), "${field.nameCn}", 1, ${field.length?c});
-            </#if>
-        </#if>
-        </#list>
+    public ResponseVo save(@RequestBody ${Domain}Vo ${domain}Vo) {
 
-        ResponseDto responseDto = new ResponseDto();
-        ${domain}Service.save(${domain}Dto);
-        responseDto.setContent(${domain}Dto);
-        return responseDto;
+        ResponseVo responseVo = new ResponseVo();
+        ${domain}Service.save(${domain}Vo);
+        responseVo.setContent(${domain}Vo);
+        return responseVo;
     }
 
     /**
      * 删除
+     *
+     * @param id
+     * @return
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseDto delete(@PathVariable String id) {
-        ResponseDto responseDto = new ResponseDto();
+    public ResponseVo delete(@PathVariable String id) {
+        ResponseVo responseVo = new ResponseVo();
         ${domain}Service.delete(id);
-        return responseDto;
+        return responseVo;
     }
 }
