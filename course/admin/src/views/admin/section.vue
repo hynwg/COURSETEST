@@ -39,6 +39,7 @@
         <td>{{ section.video }}</td>
         <td>{{ section.time }}</td>
         <td>{{ section.charge }}</td>
+        <td>{{$filters.optionKV(SECTION_CHARGE,section.charge) }}</td>
         <td>{{ section.sort }}</td>
         <td>{{ section.vod }}</td>
 
@@ -101,7 +102,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">收费</label>
                 <div class="col-sm-10">
-                  <input v-model="section.charge" class="form-control">
+                  <select v-model="section.charge" class="form-control">
+                    <option v-for="o in SECTION_CHARGE" v-bind:value="o.key">{{ o.value }}</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
@@ -133,12 +136,13 @@ import Pagination from "../../components/pagination";
 
 export default {
   components: {Pagination},
-  name: "section",
+  name: "business-section",
   processData: false,
   data: function () {
     return {
       section: {},
       sectionList: [],
+      SECTION_CHARGE: SECTION_CHARGE,
     }
   },
   mounted: function () {

@@ -3,6 +3,7 @@ package com.course.server.service;
 import com.course.server.dao.SectionMapper;
 import com.course.server.entity.Section;
 import com.course.server.entity.SectionExample;
+import com.course.server.enums.SectionChargeEnum;
 import com.course.server.vo.SectionVo;
 import com.course.server.vo.PageVo;
 import com.github.pagehelper.PageHelper;
@@ -58,6 +59,7 @@ public class SectionService {
             section.setCreatedAt(now);
             section.setUpdatedAt(now);
             section.setId(UuidUtil.getShortUuid());
+            section.setCharge(SectionChargeEnum.CHARGE.getCode());
             sectionMapper.insert(section);
         } else {
             section.setUpdatedAt(new Date());

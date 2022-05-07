@@ -105,7 +105,7 @@
 
     export default {
         components: {Pagination},
-        name: "${domain}",
+        name: "${module}-${domain}",
         processData: false,
         data: function () {
             return {
