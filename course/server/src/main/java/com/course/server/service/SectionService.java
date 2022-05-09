@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -51,6 +52,7 @@ public class SectionService {
      *
      * @param sectionVo
      */
+    @Transactional
     public void save(SectionVo sectionVo) {
         Section section = CopyUtil.copy(sectionVo, Section.class);
         if (StringUtil.isEmpty(section.getId())) {

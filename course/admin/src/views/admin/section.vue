@@ -39,7 +39,7 @@
         <td>{{ section.id }}</td>
         <td>{{ section.title }}</td>
         <td>{{ section.video }}</td>
-        <td>{{ section.time }}</td>
+        <td>{{$filters.formatSecond(section.time)}}</td>
         <td>{{$filters.optionKV(SECTION_CHARGE,section.charge) }}</td>
         <td>{{ section.sort }}</td>
         <td>{{ section.vod }}</td>
@@ -133,7 +133,6 @@
 </template>
 <script>
 import Pagination from "../../components/pagination";
-// import toast from "../../components/pagination";
 
 export default {
   components: {Pagination},
