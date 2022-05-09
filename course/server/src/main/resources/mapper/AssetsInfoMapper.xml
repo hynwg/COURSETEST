@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.server.dao.AssetsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.course.server.entity.AssetsInfo">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_id" jdbcType="CHAR" property="userId" />
+    <result column="alipay_price" jdbcType="DECIMAL" property="alipayPrice" />
+    <result column="wechat_price" jdbcType="DECIMAL" property="wechatPrice" />
+    <result column="deposit_card_price" jdbcType="DECIMAL" property="depositCardPrice" />
+    <result column="lend_price" jdbcType="DECIMAL" property="lendPrice" />
+    <result column="fund_price" jdbcType="DECIMAL" property="fundPrice" />
+    <result column="zlf_price" jdbcType="DECIMAL" property="zlfPrice" />
+    <result column="stocks_price" jdbcType="DECIMAL" property="stocksPrice" />
+    <result column="gold_price" jdbcType="DECIMAL" property="goldPrice" />
+    <result column="bonds_price" jdbcType="DECIMAL" property="bondsPrice" />
+    <result column="borrow_price" jdbcType="DECIMAL" property="borrowPrice" />
+    <result column="flowers_price" jdbcType="DECIMAL" property="flowersPrice" />
+    <result column="credit_price" jdbcType="DECIMAL" property="creditPrice" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_name, user_id, alipay_price, wechat_price, deposit_card_price, lend_price, 
+    fund_price, zlf_price, stocks_price, gold_price, bonds_price, borrow_price, flowers_price, 
+    credit_price, remarks, created_at, updated_at
+  </sql>
+  <select id="selectByExample" parameterType="com.course.server.entity.AssetsInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from assets_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from assets_info
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from assets_info
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.course.server.entity.AssetsInfoExample">
+    delete from assets_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.course.server.entity.AssetsInfo">
+    insert into assets_info (id, user_name, user_id, 
+      alipay_price, wechat_price, deposit_card_price, 
+      lend_price, fund_price, zlf_price, 
+      stocks_price, gold_price, bonds_price, 
+      borrow_price, flowers_price, credit_price, 
+      remarks, created_at, updated_at
+      )
+    values (#{id,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, #{userId,jdbcType=CHAR}, 
+      #{alipayPrice,jdbcType=DECIMAL}, #{wechatPrice,jdbcType=DECIMAL}, #{depositCardPrice,jdbcType=DECIMAL}, 
+      #{lendPrice,jdbcType=DECIMAL}, #{fundPrice,jdbcType=DECIMAL}, #{zlfPrice,jdbcType=DECIMAL}, 
+      #{stocksPrice,jdbcType=DECIMAL}, #{goldPrice,jdbcType=DECIMAL}, #{bondsPrice,jdbcType=DECIMAL}, 
+      #{borrowPrice,jdbcType=DECIMAL}, #{flowersPrice,jdbcType=DECIMAL}, #{creditPrice,jdbcType=DECIMAL}, 
+      #{remarks,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.course.server.entity.AssetsInfo">
+    insert into assets_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="alipayPrice != null">
+        alipay_price,
+      </if>
+      <if test="wechatPrice != null">
+        wechat_price,
+      </if>
+      <if test="depositCardPrice != null">
+        deposit_card_price,
+      </if>
+      <if test="lendPrice != null">
+        lend_price,
+      </if>
+      <if test="fundPrice != null">
+        fund_price,
+      </if>
+      <if test="zlfPrice != null">
+        zlf_price,
+      </if>
+      <if test="stocksPrice != null">
+        stocks_price,
+      </if>
+      <if test="goldPrice != null">
+        gold_price,
+      </if>
+      <if test="bondsPrice != null">
+        bonds_price,
+      </if>
+      <if test="borrowPrice != null">
+        borrow_price,
+      </if>
+      <if test="flowersPrice != null">
+        flowers_price,
+      </if>
+      <if test="creditPrice != null">
+        credit_price,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="alipayPrice != null">
+        #{alipayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wechatPrice != null">
+        #{wechatPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="depositCardPrice != null">
+        #{depositCardPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lendPrice != null">
+        #{lendPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="fundPrice != null">
+        #{fundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="zlfPrice != null">
+        #{zlfPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stocksPrice != null">
+        #{stocksPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goldPrice != null">
+        #{goldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bondsPrice != null">
+        #{bondsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="borrowPrice != null">
+        #{borrowPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="flowersPrice != null">
+        #{flowersPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="creditPrice != null">
+        #{creditPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.course.server.entity.AssetsInfoExample" resultType="java.lang.Long">
+    select count(*) from assets_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update assets_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=CHAR},
+      </if>
+      <if test="record.alipayPrice != null">
+        alipay_price = #{record.alipayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.wechatPrice != null">
+        wechat_price = #{record.wechatPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.depositCardPrice != null">
+        deposit_card_price = #{record.depositCardPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lendPrice != null">
+        lend_price = #{record.lendPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fundPrice != null">
+        fund_price = #{record.fundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.zlfPrice != null">
+        zlf_price = #{record.zlfPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stocksPrice != null">
+        stocks_price = #{record.stocksPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goldPrice != null">
+        gold_price = #{record.goldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bondsPrice != null">
+        bonds_price = #{record.bondsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.borrowPrice != null">
+        borrow_price = #{record.borrowPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.flowersPrice != null">
+        flowers_price = #{record.flowersPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.creditPrice != null">
+        credit_price = #{record.creditPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null">
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update assets_info
+    set id = #{record.id,jdbcType=CHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=CHAR},
+      alipay_price = #{record.alipayPrice,jdbcType=DECIMAL},
+      wechat_price = #{record.wechatPrice,jdbcType=DECIMAL},
+      deposit_card_price = #{record.depositCardPrice,jdbcType=DECIMAL},
+      lend_price = #{record.lendPrice,jdbcType=DECIMAL},
+      fund_price = #{record.fundPrice,jdbcType=DECIMAL},
+      zlf_price = #{record.zlfPrice,jdbcType=DECIMAL},
+      stocks_price = #{record.stocksPrice,jdbcType=DECIMAL},
+      gold_price = #{record.goldPrice,jdbcType=DECIMAL},
+      bonds_price = #{record.bondsPrice,jdbcType=DECIMAL},
+      borrow_price = #{record.borrowPrice,jdbcType=DECIMAL},
+      flowers_price = #{record.flowersPrice,jdbcType=DECIMAL},
+      credit_price = #{record.creditPrice,jdbcType=DECIMAL},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.course.server.entity.AssetsInfo">
+    update assets_info
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="alipayPrice != null">
+        alipay_price = #{alipayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wechatPrice != null">
+        wechat_price = #{wechatPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="depositCardPrice != null">
+        deposit_card_price = #{depositCardPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lendPrice != null">
+        lend_price = #{lendPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="fundPrice != null">
+        fund_price = #{fundPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="zlfPrice != null">
+        zlf_price = #{zlfPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stocksPrice != null">
+        stocks_price = #{stocksPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goldPrice != null">
+        gold_price = #{goldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bondsPrice != null">
+        bonds_price = #{bondsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="borrowPrice != null">
+        borrow_price = #{borrowPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="flowersPrice != null">
+        flowers_price = #{flowersPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="creditPrice != null">
+        credit_price = #{creditPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.course.server.entity.AssetsInfo">
+    update assets_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=CHAR},
+      alipay_price = #{alipayPrice,jdbcType=DECIMAL},
+      wechat_price = #{wechatPrice,jdbcType=DECIMAL},
+      deposit_card_price = #{depositCardPrice,jdbcType=DECIMAL},
+      lend_price = #{lendPrice,jdbcType=DECIMAL},
+      fund_price = #{fundPrice,jdbcType=DECIMAL},
+      zlf_price = #{zlfPrice,jdbcType=DECIMAL},
+      stocks_price = #{stocksPrice,jdbcType=DECIMAL},
+      gold_price = #{goldPrice,jdbcType=DECIMAL},
+      bonds_price = #{bondsPrice,jdbcType=DECIMAL},
+      borrow_price = #{borrowPrice,jdbcType=DECIMAL},
+      flowers_price = #{flowersPrice,jdbcType=DECIMAL},
+      credit_price = #{creditPrice,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

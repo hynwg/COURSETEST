@@ -10,6 +10,7 @@ const Welcome = () => import("./views/admin/welcome.vue");
 const Chapter = () => import("./views/admin/chapter.vue");
 const Section = () => import("./views/admin/section.vue");
 const Course = () => import("./views/admin/course.vue");
+const AssetsInfo = () => import("./views/admin/assetsInfo");
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -38,6 +39,10 @@ const router = createRouter({
                 path: "business/course",
                 name: "business/course",
                 component: Course,
+            }, {
+                path: "business/assetsInfo",
+                name: "business/assetsInfo",
+                component: AssetsInfo,
             }]
         }
     ]

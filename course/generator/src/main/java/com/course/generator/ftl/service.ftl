@@ -43,15 +43,8 @@ public class ${Domain}Service {
         List<${Domain}> ${domain}List = ${domain}Mapper.selectByExample(${domain}Example);
         PageInfo<${Domain}> pageInfo = new PageInfo<>(${domain}List);
         pageVo.setTotal(pageInfo.getTotal());
-
-        List<${Domain}Vo> list = new ArrayList<>();
-        for (int i = 0; i < ${domain}List.size(); i++) {
-            ${Domain} ${domain} = ${domain}List.get(i);
-            ${Domain}Vo ${domain}Vo = new ${Domain}Vo();
-            BeanUtils.copyProperties(${domain}, ${domain}Vo);
-            list.add(${domain}Vo);
-        }
-        pageVo.setList(list);
+    List<${Domain}Vo> ${domain}VoList = CopyUtil.copyList(${domain}List,${Domain}Vo.class);
+        chapterPageVo.setList(${domain}VoList);
     }
 
     /**
@@ -75,7 +68,7 @@ public class ${Domain}Service {
             ${domain}.setUpdatedAt(now);
         </#if>
     </#list>
-            ${domain}.setId(UuidUtil.getShortUuid());
+
             ${domain}Mapper.insert(${domain});
         } else {
     <#list fieldList as field>

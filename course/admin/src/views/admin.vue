@@ -372,7 +372,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="">
+          <li class="active open">
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-list"></i>
               <span class="menu-text"> 系统管理 </span>
@@ -383,6 +383,12 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+              <li class="">
+                <router-link to="/business/assetsInfo">
+                  <i class="menu-icon fa fa-chapter-right"></i>
+                  资产管理
+                </router-link>
+              </li>
               <li class="">
                 <a href="tables.html">
                   <i class="menu-icon fa fa-caret-right"></i>
@@ -413,22 +419,26 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+              <li id="business-course-sidebar">
+                <router-link to="/business/course">
+                  <i class="menu-icon fa fa-course-right"></i>
+                  课程管理
+                </router-link>
+                <b class="arrow"></b>
+              </li>
               <li class="" id="business-chapter-sidebar">
                 <router-link to="/business/chapter">
                   <i class="menu-icon fa fa-chapter-right"></i>
                   大章管理
                 </router-link>
+              </li>
+              <li class="" id="business-section-sidebar">
                 <router-link to="/business/section">
                   <i class="menu-icon fa fa-section-right"></i>
                   小节管理
                 </router-link>
-                <router-link to="/business/course">
-                  <i class="menu-icon fa fa-course-right"></i>
-                  课程管理
-                </router-link>
-
-                <b class="arrow"></b>
               </li>
+
             </ul>
           </li>
         </ul><!-- /.nav-list -->

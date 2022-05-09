@@ -1,9 +1,11 @@
 package com.course.server.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 public class SectionVo {
 
     /**
@@ -19,12 +21,12 @@ public class SectionVo {
     /**
      * 课程|course.id
      */
-    private String courseId;
+    private Integer courseId;
 
     /**
      * 大章|chapter.id
      */
-    private String chapterId;
+    private Integer chapterId;
 
     /**
      * 视频
@@ -62,95 +64,6 @@ public class SectionVo {
      * vod|阿里云vod
      */
     private String vod;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getChapterId() {
-        return chapterId;
-    }
-
-    public void setChapterId(String chapterId) {
-        this.chapterId = chapterId;
-    }
-
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
-    }
-
-    public Integer getTime() {
-        return time;
-    }
-
-    public void setTime(Integer time) {
-        this.time = time;
-    }
-
-    public String getCharge() {
-        return charge;
-    }
-
-    public void setCharge(String charge) {
-        this.charge = charge;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getVod() {
-        return vod;
-    }
-
-    public void setVod(String vod) {
-        this.vod = vod;
-    }
-
 
     @Override
     public String toString() {

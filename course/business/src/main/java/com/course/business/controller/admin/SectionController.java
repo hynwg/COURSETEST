@@ -1,13 +1,12 @@
 package com.course.business.controller.admin;
 
 import com.course.server.service.SectionService;
-import com.course.server.vo.SectionVo;
-import com.course.server.vo.PageVo;
 import com.course.server.vo.ResponseVo;
+import com.course.server.vo.SectionPageVo;
+import com.course.server.vo.SectionVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import com.course.server.util.ValidatorUtil;
 
 import javax.annotation.Resource;
 
@@ -21,11 +20,10 @@ public class SectionController {
     public static final String BUSINESS_NAME = "小节";
 
     @RequestMapping("/query")
-    public ResponseVo query(@RequestBody PageVo pageVo) {
-        LOG.info("pageVo:{}", pageVo);
+    public ResponseVo query(@RequestBody SectionPageVo sectionPageVo) {
         ResponseVo responseVo = new ResponseVo();
-        sectionService.query(pageVo);
-        responseVo.setContent(pageVo);
+        sectionService.query(sectionPageVo);
+        responseVo.setContent(sectionPageVo);
         return responseVo;
     }
 

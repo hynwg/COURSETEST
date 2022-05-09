@@ -1,5 +1,5 @@
 package com.course.server.vo;
-
+import lombok.Data;
 <#list typeSet as type>
 <#if type=='Date'>
 import java.util.Date;
@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 </#if>
 </#list>
 
+
+@Data
 public class ${Domain}Vo {
 
     <#list fieldList as field>
@@ -20,16 +22,6 @@ public class ${Domain}Vo {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     </#if>
     private ${field.javaType} ${field.nameHump};
-
-    </#list>
-    <#list fieldList as field>
-    public ${field.javaType} get${field.nameBigHump}() {
-        return ${field.nameHump};
-    }
-
-    public void set${field.nameBigHump}(${field.javaType} ${field.nameHump}) {
-        this.${field.nameHump} = ${field.nameHump};
-    }
 
     </#list>
 

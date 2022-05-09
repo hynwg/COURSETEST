@@ -4,20 +4,19 @@ import com.course.server.dao.SectionMapper;
 import com.course.server.entity.Section;
 import com.course.server.entity.SectionExample;
 import com.course.server.enums.SectionChargeEnum;
+import com.course.server.util.CopyUtil;
+import com.course.server.util.UuidUtil;
+import com.course.server.vo.SectionPageVo;
 import com.course.server.vo.SectionVo;
-import com.course.server.vo.PageVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import com.course.server.util.CopyUtil;
-import com.course.server.util.UuidUtil;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-        import java.util.Date;
 
 @Service
 public class SectionService {
@@ -27,24 +26,24 @@ public class SectionService {
     /**
      * 分页查询
      *
-     * @param pageVo
+     * @param sectionPageVo
      */
-    public void query(PageVo pageVo) {
-        PageHelper.startPage(pageVo.getPage(), pageVo.getSize());
+    public void query(SectionPageVo  sectionPageVo) {
+        PageHelper.startPage(sectionPageVo.getPage(), sectionPageVo.getSize());
         SectionExample  sectionExample= new SectionExample();
+        SectionExample.Criteria criteria = sectionExample.createCriteria();
+        if (!StringUtils.isEmpty(sectionPageVo.getCourseId())) {
+            criteria.andCourseIdEqualTo(sectionPageVo.getCourseId());
+        }
+        if (!StringUtils.isEmpty(sectionPageVo.getChapterId())) {
+            criteria.andChapterIdEqualTo(sectionPageVo.getChapterId());
+        }
         sectionExample.setOrderByClause("sort asc");
         List<Section> sectionList = sectionMapper.selectByExample(sectionExample);
         PageInfo<Section> pageInfo = new PageInfo<>(sectionList);
-        pageVo.setTotal(pageInfo.getTotal());
-
-        List<SectionVo> list = new ArrayList<>();
-        for (int i = 0; i < sectionList.size(); i++) {
-            Section section = sectionList.get(i);
-            SectionVo sectionVo = new SectionVo();
-            BeanUtils.copyProperties(section, sectionVo);
-            list.add(sectionVo);
-        }
-        pageVo.setList(list);
+        sectionPageVo.setTotal(pageInfo.getTotal());
+        List<SectionVo> sectionVoList = CopyUtil.copyList(sectionList, SectionVo.class);
+        sectionPageVo.setList(sectionVoList);
     }
 
     /**
@@ -65,6 +64,8 @@ public class SectionService {
             section.setUpdatedAt(new Date());
             sectionMapper.updateByPrimaryKey(section);
         }
+        //为了保持事务一致性，增加事务处理
+        sectionMapper.updateCourseTime(section.getCourseId());
     }
 
 

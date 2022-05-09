@@ -1,7 +1,7 @@
 -- 课程
 drop table if exists course;
 create table course (
-                        id char(8) not null default '' comment 'id',
+                        id int(255) not null default '' comment 'id',
                         name varchar(50) not null comment '名称',
                         summary varchar(2000) comment '概述',
                         time int default 0 comment '时长|单位秒',

@@ -1,8 +1,8 @@
 package com.course.business.controller.admin;
 
 import com.course.server.service.CourseService;
+import com.course.server.vo.CoursePageVo;
 import com.course.server.vo.CourseVo;
-import com.course.server.vo.PageVo;
 import com.course.server.vo.ResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +20,10 @@ public class CourseController {
     public static final String BUSINESS_NAME = "课程";
 
     @RequestMapping("/query")
-    public ResponseVo query(@RequestBody PageVo pageVo) {
-        LOG.info("pageVo:{}", pageVo);
+    public ResponseVo query(@RequestBody CoursePageVo coursePageVo) {
         ResponseVo responseVo = new ResponseVo();
-        courseService.query(pageVo);
-        responseVo.setContent(pageVo);
+        courseService.query(coursePageVo);
+        responseVo.setContent(coursePageVo);
         return responseVo;
     }
 

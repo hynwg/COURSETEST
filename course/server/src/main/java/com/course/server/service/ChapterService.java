@@ -3,18 +3,16 @@ package com.course.server.service;
 import com.course.server.dao.ChapterMapper;
 import com.course.server.entity.Chapter;
 import com.course.server.entity.ChapterExample;
+import com.course.server.util.CopyUtil;
+import com.course.server.vo.ChapterPageVo;
 import com.course.server.vo.ChapterVo;
-import com.course.server.vo.PageVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import com.course.server.util.CopyUtil;
-import com.course.server.util.UuidUtil;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,23 +24,20 @@ public class ChapterService {
     /**
      * 分页查询
      *
-     * @param pageVo
+     * @param chapterPageVo
      */
-    public void query(PageVo pageVo) {
-        PageHelper.startPage(pageVo.getPage(), pageVo.getSize());
-        ChapterExample example = new ChapterExample();
-        List<Chapter> chapterList = chapterMapper.selectByExample(example);
-        PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
-        pageVo.setTotal(pageInfo.getTotal());
-
-        List<ChapterVo> list = new ArrayList<>();
-        for (int i = 0; i < chapterList.size(); i++) {
-            Chapter chapter = chapterList.get(i);
-            ChapterVo chapterVo = new ChapterVo();
-            BeanUtils.copyProperties(chapter, chapterVo);
-            list.add(chapterVo);
+    public void query(ChapterPageVo chapterPageVo) {
+        PageHelper.startPage(chapterPageVo.getPage(), chapterPageVo.getSize());
+        ChapterExample chapterExample = new ChapterExample();
+        ChapterExample.Criteria criteria = chapterExample.createCriteria();
+        if (!StringUtils.isEmpty(chapterPageVo.getCourseId())) {
+            criteria.andCourseIdEqualTo(chapterPageVo.getCourseId());
         }
-        pageVo.setList(list);
+        List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);
+        PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
+        chapterPageVo.setTotal(pageInfo.getTotal());
+        List<ChapterVo> chapterDtoList = CopyUtil.copyList(chapterList, ChapterVo.class);
+        chapterPageVo.setList(chapterDtoList);
     }
 
     /**
@@ -53,7 +48,7 @@ public class ChapterService {
     public void save(ChapterVo chapterVo) {
         Chapter chapter = CopyUtil.copy(chapterVo, Chapter.class);
         if (StringUtil.isEmpty(chapter.getId())) {
-            chapter.setId(UuidUtil.getShortUuid());
+           // chapter.setId(UuidUtil.getShortUuid());
             chapterMapper.insert(chapter);
         } else {
             chapterMapper.updateByPrimaryKey(chapter);

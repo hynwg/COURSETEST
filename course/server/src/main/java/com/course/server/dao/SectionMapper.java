@@ -2,8 +2,9 @@ package com.course.server.dao;
 
 import com.course.server.entity.Section;
 import com.course.server.entity.SectionExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SectionMapper {
     long countByExample(SectionExample example);
@@ -27,4 +28,7 @@ public interface SectionMapper {
     int updateByPrimaryKeySelective(Section record);
 
     int updateByPrimaryKey(Section record);
+
+    int updateCourseTime(int courseId);
+
 }

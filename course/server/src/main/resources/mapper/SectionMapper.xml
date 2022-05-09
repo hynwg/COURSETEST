@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, course_id, chapter_id, video, `time`, charge, sort, created_at, updated_at, 
+    id, title, course_id, chapter_id, video, `time`, charge, sort, created_at, updated_at,
     vod
   </sql>
   <select id="selectByExample" parameterType="com.course.server.entity.SectionExample" resultMap="BaseResultMap">
@@ -91,7 +91,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from section
     where id = #{id,jdbcType=CHAR}
@@ -107,13 +107,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.course.server.entity.Section">
-    insert into section (id, title, course_id, 
-      chapter_id, video, `time`, 
-      charge, sort, created_at, 
+    insert into section (title, course_id,
+      chapter_id, video, `time`,
+      charge, sort, created_at,
       updated_at, vod)
-    values (#{id,jdbcType=CHAR}, #{title,jdbcType=VARCHAR}, #{courseId,jdbcType=CHAR}, 
-      #{chapterId,jdbcType=CHAR}, #{video,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER}, 
-      #{charge,jdbcType=CHAR}, #{sort,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+    values (#{title,jdbcType=VARCHAR}, #{courseId,jdbcType=CHAR},
+      #{chapterId,jdbcType=CHAR}, #{video,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER},
+      #{charge,jdbcType=CHAR}, #{sort,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP},
       #{updatedAt,jdbcType=TIMESTAMP}, #{vod,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.course.server.entity.Section">
@@ -303,4 +303,11 @@
       vod = #{vod,jdbcType=CHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
+<!--更新小节时长，同时要更新课程的时长-->
+  <update id="updateCourseTime">
+    update course c set time = (select sum(time) from section where course_id = #{courseId,jdbcType=CHAR})
+    where c.id = #{courseId,jdbcType=CHAR}
+
+  </update>
+
 </mapper>

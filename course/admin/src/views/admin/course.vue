@@ -12,57 +12,68 @@
     </p>
 
     <pagination ref="pagination" v-bind:list="query" v-bind:itemCount="8"></pagination>
+    <div class="row">
+      <div v-for="course in courseList" class="col-md-4">
+        <div class="thumbnail search-thumbnail">
+          <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg" />
+          <img v-show="course.image" class="media-object" v-bind:src="course.image" />
+          <div class="caption">
+            <div class="clearfix">
+              <span class="pull-right label label-primary info-label">
+                {{$filters.optionKV(COURSE_LEVEL,course.level)}}
+              </span>
+              <span class="pull-right label label-primary info-label">
+                {{$filters.optionKV(COURSE_CHARGE,course.charge)}}
+              </span>
+              <span class="pull-right label label-primary info-label">
+                {{$filters.optionKV(COURSE_STATUS,course.status)}}
+              </span>
+            </div>
 
-    <table id="simple-table" class="table  table-bordered table-hover">
-      <thead>
-      <tr>
-        <th>id</th>
-        <th>名称</th>
-        <th>概述</th>
-        <th>时长</th>
-        <th>价格（元）</th>
-        <th>封面</th>
-        <th>级别</th>
-        <th>收费</th>
-        <th>状态</th>
-        <th>报名数</th>
-        <th>顺序</th>
-        <th>讲师</th>
-        <th>操作</th>
-      </tr>
-      </thead>
+            <h3 class="search-title">
+              <a href="#" class="blue">{{course.name}}</a>
+            </h3>
 
-      <tbody>
-      <tr v-for="course in courseList">
+<!--            <div v-for="teacher in teachers.filter(t=>{return t.id===course.teacherId})" class="profile-activity clearfix">-->
+<!--              <div>-->
+<!--                <img v-show="!teacher.image" class="pull-left" src="/ace/assets/images/avatars/avatar5.png">-->
+<!--                <img v-show="teacher.image" class="pull-left" v-bind:src="teacher.image">-->
+<!--                <a class="user" href="#"> {{teacher.name}} </a>-->
+<!--                <br>-->
+<!--                {{teacher.position}}-->
+<!--              </div>-->
+<!--            </div>-->
 
-        <td>{{ course.id }}</td>
-        <td>{{ course.name }}</td>
-        <td>{{ course.summary }}</td>
-        <td>{{ course.time }}</td>
-        <td>{{ course.price }}</td>
-        <td>{{ course.image }}</td>
-        <td>{{ $filters.optionKV(COURSE_LEVEL,course.level) }}</td>
-        <td>{{ $filters.optionKV(COURSE_CHARGE,course.charge) }}</td>
-        <td>{{ $filters.optionKV(COURSE_STATUS,course.status) }}</td>
-        <td>{{ course.enroll }}</td>
-        <td>{{ course.sort }}</td>
-        <td>{{ course.teacherId }}</td>
-
-        <td>
-          <div class="hidden-sm hidden-xs btn-group">
-
-            <button v-on:click="edit(course)" class="btn btn-xs btn-info">
-              <i class="ace-icon fa fa-pencil bigger-120"></i>
-            </button>
-            <button v-on:click="del(course.id)" class="btn btn-xs btn-danger">
-              <i class="ace-icon fa fa-trash-o bigger-120"></i>
-            </button>
+            <p>
+              <span class="blue bolder bigger-150">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
+            </p>
+            <p>{{course.summary}}</p>
+            <p>
+              <span class="badge badge-info">ID：{{course.id}}</span>
+              <span class="badge badge-info">排序：{{course.sort}}</span>
+              <span class="badge badge-info">时长：{{course.time | formatSecond}}</span>
+            </p>
+            <p>
+              <button v-on:click="toChapter(course)" class="btn btn-white btn-xs btn-info btn-round">
+                大章
+              </button>&nbsp;
+              <button v-on:click="toContent(course)" class="btn btn-white btn-xs btn-info btn-round">
+                内容
+              </button>&nbsp;
+              <button v-on:click="openSortModal(course)" class="btn btn-white btn-xs btn-info btn-round">
+                排序
+              </button>&nbsp;
+              <button v-on:click="edit(course)" class="btn btn-white btn-xs btn-info btn-round">
+                编辑
+              </button>&nbsp;
+              <button v-on:click="del(course.id)" class="btn btn-white btn-xs btn-warning btn-round">
+                删除
+              </button>
+            </p>
           </div>
-        </td>
-      </tr>
-
-      </tbody>
-    </table>
+        </div>
+      </div>
+    </div>
 
     <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -256,6 +267,14 @@ export default {
           }
         })
       });
+    },
+    /**
+     * 点击【大章】
+     */
+    toChapter(course) {
+      let _this = this;
+      SessionStorage.set(SESSION_KEY_COURSE, course);
+      _this.$router.push("/business/chapter");
     }
   }
 }

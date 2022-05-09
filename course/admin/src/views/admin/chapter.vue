@@ -1,6 +1,14 @@
 <template>
   <div>
+    <h4 class="lighter">
+      <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+      <router-link to="/business/course" class="pink"> {{course.name}} </router-link>
+    </h4>
     <p>
+      <router-link to="/business/course" class="btn btn-white btn-default btn-round">
+        <i class="ace-icon fa fa-arrow-left"></i>
+        返回课程
+      </router-link>
       <button v-on:click="add()" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-edit"></i>
         新增
@@ -32,12 +40,14 @@
 
         <td>
           <div class="hidden-sm hidden-xs btn-group">
-
-            <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
-              <i class="ace-icon fa fa-pencil bigger-120"></i>
-            </button>
-            <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
-              <i class="ace-icon fa fa-trash-o bigger-120"></i>
+            <button v-on:click="toSection(chapter)" class="btn btn-white btn-xs btn-info btn-round">
+              小节
+            </button>&nbsp;
+            <button v-on:click="edit(chapter)" class="btn btn-white btn-xs btn-info btn-round">
+              编辑
+            </button>&nbsp;
+            <button v-on:click="del(chapter.id)" class="btn btn-white btn-xs btn-warning btn-round">
+              删除
             </button>
           </div>
         </td>
@@ -92,11 +102,17 @@ export default {
     return {
       chapter: {},
       chapterList: [],
+      course: {},
     }
   },
   mounted: function () {
     let _this = this;
     _this.$refs.pagination.size = 5;
+    let course = SessionStorage.get(SESSION_KEY_COURSE) || {};
+    if (Tool.isEmpty(course)) {
+      _this.$router.push("/welcome");
+    }
+    _this.course = course;
     _this.query(1);
   },
   methods: {
@@ -121,6 +137,7 @@ export default {
       _this.$axios.post(process.env.VUE_APP_SERVER + '/business/admin/chapter/query', {
         page: page,
         size: _this.$refs.pagination.size,
+        courseId:_this.course.id
       }).then((response) => {
         Loading.hide();
         console.log("查询大章列表", response);
@@ -131,8 +148,13 @@ export default {
     },
     save() {
       let _this = this;
-
-
+      // 保存校验
+      if (!Validator.require(_this.chapter.name, "名称")
+          || !Validator.length(_this.chapter.courseId, "课程ID", 1, 8)) {
+        return;
+      }
+      _this.chapter.courseId = _this.course.id;
+      Loading.show();
       _this.$axios.post(process.env.VUE_APP_SERVER + '/business/admin/chapter/save',
           _this.chapter
       ).then((response) => {
@@ -162,6 +184,14 @@ export default {
           }
         })
       });
+    },
+    /**
+     * 点击【小节】
+     */
+    toSection(chapter) {
+      let _this = this;
+      SessionStorage.set(SESSION_KEY_CHAPTER, chapter);
+      _this.$router.push("/business/section");
     }
   }
 }

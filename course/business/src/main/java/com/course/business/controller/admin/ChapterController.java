@@ -1,13 +1,13 @@
 package com.course.business.controller.admin;
 
 import com.course.server.service.ChapterService;
+import com.course.server.util.ValidatorUtil;
+import com.course.server.vo.ChapterPageVo;
 import com.course.server.vo.ChapterVo;
-import com.course.server.vo.PageVo;
 import com.course.server.vo.ResponseVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import com.course.server.util.ValidatorUtil;
 
 import javax.annotation.Resource;
 
@@ -21,11 +21,11 @@ public class ChapterController {
     public static final String BUSINESS_NAME = "大章";
 
     @RequestMapping("/query")
-    public ResponseVo query(@RequestBody PageVo pageVo) {
-        LOG.info("pageVo:{}", pageVo);
+    public ResponseVo query(@RequestBody ChapterPageVo chapterPageVo) {
         ResponseVo responseVo = new ResponseVo();
-        chapterService.query(pageVo);
-        responseVo.setContent(pageVo);
+        ValidatorUtil.require(chapterPageVo.getCourseId(), "课程ID");
+        chapterService.query(chapterPageVo);
+        responseVo.setContent(chapterPageVo);
         return responseVo;
     }
 
