@@ -86,6 +86,14 @@
           <div class="modal-body">
             <form class="form-horizontal">
               <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  分类
+                </label>
+                <div class="col-sm-10">
+                  <ul id="tree" class="ztree"></ul>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label">名称</label>
                 <div class="col-sm-10">
                   <input v-model="course.name" class="form-control">
@@ -188,12 +196,14 @@ export default {
       courseList: [],
       COURSE_LEVEL:COURSE_LEVEL,
       COURSE_CHARGE:COURSE_CHARGE,
-      COURSE_STATUS:COURSE_STATUS
+      COURSE_STATUS:COURSE_STATUS,
+      tree: {},
     }
   },
   mounted: function () {
     let _this = this;
     _this.$refs.pagination.size = 5;
+    _this.allCategory();
     _this.query(1);
   },
   methods: {
@@ -237,6 +247,15 @@ export default {
       ) {
         return;
       }
+      //保存之前tree树型
+      let categorys = _this.tree.getCheckedNodes();
+      if (Tool.isEmpty(categorys)) {
+        Toast.warning("请选择分类！");
+        return;
+      }
+      _this.course.categoryList = categorys;
+
+
       Loading.show();
       _this.$axios.post(process.env.VUE_APP_SERVER + '/business/admin/course/save',
           _this.course
@@ -275,7 +294,42 @@ export default {
       let _this = this;
       SessionStorage.set(SESSION_KEY_COURSE, course);
       _this.$router.push("/business/chapter");
-    }
+    },
+    allCategory() {
+      let _this = this;
+      Loading.show();
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/category/all').then((response)=>{
+        Loading.hide();
+        let resp = response.data;
+        _this.categoryList = resp.content;
+
+        _this.initTree();
+      })
+    },
+
+    initTree() {
+      let _this = this;
+      let setting = {
+        check: {
+          enable: true
+        },
+        data: {
+          simpleData: {
+            idKey: "id",
+            pIdKey: "parent",
+            rootPId: "00000000",
+            enable: true
+          }
+        }
+      };
+
+      let zNodes = _this.categoryList;
+
+      _this.tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+
+      // 展开所有的节点
+      // _this.tree.expandAll(true);
+    },
   }
 }
 </script>

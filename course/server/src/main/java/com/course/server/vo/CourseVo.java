@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class CourseVo {
@@ -12,7 +13,7 @@ public class CourseVo {
     /**
      * id
      */
-    private String id;
+    private Integer id;
 
     /**
      * 名称
@@ -81,6 +82,13 @@ public class CourseVo {
      */
     private String teacherId;
 
+    private List<CategoryVo> categorys;
+
+    private List<ChapterVo> chapters;
+
+    private List<SectionVo> sections;
+
+    private String content;
 
     @Override
     public String toString() {

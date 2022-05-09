@@ -19,6 +19,9 @@ import java.util.List;
 public class CourseService {
     @Resource
     private CourseMapper courseMapper;
+    @Resource
+    private CourseCategoryService courseCategoryService;
+
 
     /**
      * 分页查询
@@ -43,16 +46,18 @@ public class CourseService {
      */
     public void save(CourseVo courseVo) {
         Course course = CopyUtil.copy(courseVo, Course.class);
-        if (StringUtil.isEmpty(course.getId())) {
+        if (course.getId()==null) {
             Date now = new Date();
             course.setCreatedAt(now);
             course.setUpdatedAt(now);
-           // course.setId(UuidUtil.getShortUuid());
+            // course.setId(UuidUtil.getShortUuid());
             courseMapper.insert(course);
         } else {
             course.setUpdatedAt(new Date());
             courseMapper.updateByPrimaryKey(course);
         }
+        // 批量保存课程分类
+        courseCategoryService.saveBatch(course.getId(), courseVo.getCategorys());
     }
 
 

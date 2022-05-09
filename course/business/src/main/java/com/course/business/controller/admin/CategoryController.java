@@ -24,7 +24,7 @@ public class CategoryController {
      *
      * @return
      */
-    @RequestMapping("/all")
+    @PostMapping("/all")
     public ResponseVo all() {
         ResponseVo responseVo = new ResponseVo();
         List<CategoryVo> categoryVoList = categoryService.all();

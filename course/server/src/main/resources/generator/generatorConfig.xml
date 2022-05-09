@@ -11,9 +11,9 @@
         <property name="endingDelimiter" value="`"/>
 
         <!--覆盖生成XML文件-->
-        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
         <!-- 生成的实体类添加toString()方法 -->
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
 
         <!-- 不生成注释 -->
         <commentGenerator>
@@ -37,14 +37,15 @@
         <!-- dao的位置 -->
         <javaClientGenerator targetProject="src\main\java"
                              targetPackage="com.course.server.dao"
-                             type="XMLMAPPER" />
-<!--        <table tableName="course" domainObjectName="Course"/>-->
-<!--        <table tableName="chapter" domainObjectName="Chapter"/>-->
+                             type="XMLMAPPER"/>
+        <!--        <table tableName="course" domainObjectName="Course"/>-->
         <!--        <table tableName="chapter" domainObjectName="Chapter"/>-->
-<!--                <table tableName="section" domainObjectName="Section"/>-->
-<!--                <table tableName="course" domainObjectName="Course"/>-->
-<!--        <table tableName="assets_info" domainObjectName="AssetsInfo"/>-->
-                <table tableName="category" domainObjectName="Category"/>
+        <!--        <table tableName="chapter" domainObjectName="Chapter"/>-->
+        <!--                <table tableName="section" domainObjectName="Section"/>-->
+        <!--                <table tableName="course" domainObjectName="Course"/>-->
+        <!--        <table tableName="assets_info" domainObjectName="AssetsInfo"/>-->
+        <!--                <table tableName="category" domainObjectName="Category"/>-->
+        <table tableName="course_category" domainObjectName="CourseCategory"/>
         <!--        <table tableName="course_content" domainObjectName="CourseContent"/>-->
         <!--        <table tableName="course_content_file" domainObjectName="CourseContentFile"/>-->
         <!--        <table tableName="teacher" domainObjectName="Teacher"/>-->
@@ -56,7 +57,7 @@
         <!--        <table tableName="role_user" domainObjectName="RoleUser"/>-->
         <!--        <table tableName="member" domainObjectName="Member"/>-->
         <!--        <table tableName="sms" domainObjectName="Sms"/>-->
-<!--        <table tableName="member_course" domainObjectName="MemberCourse"/>-->
+        <!--        <table tableName="member_course" domainObjectName="MemberCourse"/>-->
     </context>
-<!--    mybatis-generator.generate -e-->
+    <!--    mybatis-generator.generate -e-->
 </generatorConfiguration>
