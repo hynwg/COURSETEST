@@ -44,7 +44,7 @@ public class ${Domain}Service {
         PageInfo<${Domain}> pageInfo = new PageInfo<>(${domain}List);
         pageVo.setTotal(pageInfo.getTotal());
     List<${Domain}Vo> ${domain}VoList = CopyUtil.copyList(${domain}List,${Domain}Vo.class);
-        chapterPageVo.setList(${domain}VoList);
+    ${domain}PageVo.setList(${domain}VoList);
     }
 
     /**
