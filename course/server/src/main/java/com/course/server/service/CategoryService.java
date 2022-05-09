@@ -19,6 +19,19 @@ public class CategoryService {
     private CategoryMapper categoryMapper;
 
     /**
+     * 查询全部数据
+     *
+     * @return
+     */
+    public List<CategoryVo> all() {
+        CategoryExample categoryExample = new CategoryExample();
+        categoryExample.setOrderByClause("sort asc");
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+        List<CategoryVo> categoryVoList = CopyUtil.copyList(categoryList, CategoryVo.class);
+        return categoryVoList;
+    }
+
+    /**
      * 分页查询
      *
      * @param categoryPageVo
@@ -30,7 +43,7 @@ public class CategoryService {
         List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
         PageInfo<Category> pageInfo = new PageInfo<>(categoryList);
         categoryPageVo.setTotal(pageInfo.getTotal());
-    List<CategoryVo> categoryVoList = CopyUtil.copyList(categoryList,CategoryVo.class);
+        List<CategoryVo> categoryVoList = CopyUtil.copyList(categoryList, CategoryVo.class);
         categoryPageVo.setList(categoryVoList);
     }
 
@@ -41,7 +54,7 @@ public class CategoryService {
      */
     public void save(CategoryVo categoryVo) {
         Category category = CopyUtil.copy(categoryVo, Category.class);
-        if (category.getId()==null) {
+        if (category.getId() == null) {
             categoryMapper.insert(category);
         } else {
             categoryMapper.updateByPrimaryKey(category);
@@ -55,6 +68,21 @@ public class CategoryService {
      * @param id
      */
     public void delete(int id) {
+        deleteChildren(id);
         categoryMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 删除子分类
+     * @param id
+     */
+    public void deleteChildren(int id) {
+        Category category = categoryMapper.selectByPrimaryKey(id);
+        if ("0".equals(category.getParent())) {
+            // 如果是一级分类，需要删除其下的二级分类
+            CategoryExample example = new CategoryExample();
+            example.createCriteria().andParentEqualTo(category.getId());
+            categoryMapper.deleteByExample(example);
+        }
     }
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/category")
@@ -18,7 +19,24 @@ public class CategoryController {
 
     private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
     public static final String BUSINESS_NAME = "分类";
+    /**
+     * 查询全部数据
+     *
+     * @return
+     */
+    @RequestMapping("/all")
+    public ResponseVo all() {
+        ResponseVo responseVo = new ResponseVo();
+        List<CategoryVo> categoryVoList = categoryService.all();
+        responseVo.setContent(categoryVoList);
+        return responseVo;
+    }
 
+    /**
+     *分页查询
+     * @param categoryPageVo
+     * @return
+     */
     @RequestMapping("/query")
     public ResponseVo query(@RequestBody CategoryPageVo categoryPageVo) {
         LOG.info("pageVo:{}", categoryPageVo);
