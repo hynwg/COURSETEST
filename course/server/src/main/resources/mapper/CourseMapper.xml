@@ -109,7 +109,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.course.server.entity.Course">
+  <insert id="insert" parameterType="com.course.server.entity.Course" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into course ( `name`, summary,
       `time`, price, image,
       `level`, charge, `status`, enroll,

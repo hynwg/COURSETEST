@@ -67,7 +67,7 @@ public class CourseCategoryService {
     @Transactional
     public void saveBatch(Integer courseId, List<CategoryVo> dtoList) {
         CourseCategoryExample example = new CourseCategoryExample();
-        //example.createCriteria().andCourseIdEqualTo(courseId);
+        example.createCriteria().andCourseIdEqualTo(courseId);
         courseCategoryMapper.deleteByExample(example);
         for (int i = 0, l = dtoList.size(); i < l; i++) {
             CategoryVo categoryVo = dtoList.get(i);
@@ -76,5 +76,16 @@ public class CourseCategoryService {
             courseCategory.setCategoryId(categoryVo.getId());
             courseCategoryMapper.insert(courseCategory);
         }
+    }
+
+    /**
+     * 查找课程下所有分类
+     * @param courseId
+     */
+    public List<CourseCategoryVo> listByCourse(Integer courseId) {
+        CourseCategoryExample example = new CourseCategoryExample();
+        example.createCriteria().andCourseIdEqualTo(courseId);
+        List<CourseCategory> courseCategoryList = courseCategoryMapper.selectByExample(example);
+        return CopyUtil.copyList(courseCategoryList, CourseCategoryVo.class);
     }
 }

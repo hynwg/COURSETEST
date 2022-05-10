@@ -82,7 +82,7 @@ public class CourseVo {
      */
     private String teacherId;
 
-    private List<CategoryVo> categorys;
+    private List<CategoryVo> categoryList;
 
     private List<ChapterVo> chapters;
 

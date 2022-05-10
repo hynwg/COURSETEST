@@ -174,7 +174,7 @@ public class CourseCategoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andCourseIdEqualTo(String value) {
+        public Criteria andCourseIdEqualTo(Integer  value) {
             addCriterion("course_id =", value, "courseId");
             return (Criteria) this;
         }

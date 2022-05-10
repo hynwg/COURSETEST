@@ -3,6 +3,9 @@ import router from './router.js'
 import App from './app.vue'
 import axios from 'axios'
 import filters from './filter/filter'
+import '@ztree/ztree_v3/js/jquery.ztree.core.min.js'
+import '@ztree/ztree_v3/js/jquery.ztree.excheck.min.js'
+import '@ztree/ztree_v3/css/metroStyle/metroStyle.css'
 
 const app = createApp(App)
 app.use(router)

@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -44,6 +45,7 @@ public class CourseService {
      *
      * @param courseVo
      */
+    @Transactional
     public void save(CourseVo courseVo) {
         Course course = CopyUtil.copy(courseVo, Course.class);
         if (course.getId()==null) {
@@ -57,7 +59,7 @@ public class CourseService {
             courseMapper.updateByPrimaryKey(course);
         }
         // 批量保存课程分类
-        courseCategoryService.saveBatch(course.getId(), courseVo.getCategorys());
+        courseCategoryService.saveBatch(course.getId(), courseVo.getCategoryList());
     }
 
 
