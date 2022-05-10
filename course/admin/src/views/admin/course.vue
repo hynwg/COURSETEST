@@ -218,7 +218,7 @@ export default {
       _this.course = {
       //  sort: _this.$refs.pagination.total + 1
       };
-     // _this.tree.checkAllNodes(false);
+       _this.tree.checkAllNodes(false);
       $("#form-modal").modal("show");
     },
     edit(course) {
@@ -348,16 +348,16 @@ export default {
     listCategory(courseId) {
       let _this = this;
       Loading.show();
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/course/list-category/' + courseId).then((res)=>{
+      _this.$axios.post(process.env.VUE_APP_SERVER + '/business/admin/course/list-category/' + courseId).then((res)=>{
         Loading.hide();
         console.log("查找课程下所有分类结果：", res);
         let response = res.data;
-        let categorys = response.content;
+        let categoryList = response.content;
 
         // 勾选查询到的分类
         _this.tree.checkAllNodes(false);
-        for (let i = 0; i < categorys.length; i++) {
-          let node = _this.tree.getNodeByParam("id", categorys[i].categoryId);
+        for (let i = 0; i < categoryList.length; i++) {
+          let node = _this.tree.getNodeByParam("id", categoryList[i].categoryId);
           _this.tree.checkNode(node, true);
         }
       })
