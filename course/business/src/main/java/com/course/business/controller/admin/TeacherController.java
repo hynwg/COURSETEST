@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/teacher")
@@ -18,6 +19,17 @@ public class TeacherController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TeacherController.class);
     public static final String BUSINESS_NAME = "讲师";
+
+    /**
+     * 列表查询
+     */
+    @PostMapping("/all")
+    public ResponseVo all() {
+        ResponseVo responseVo = new ResponseVo();
+        List<TeacherVo> teacherVoList = teacherService.all();
+        responseVo.setContent(teacherVoList);
+        return responseVo;
+    }
 
     @RequestMapping("/query")
     public ResponseVo query(@RequestBody TeacherPageVo teacherPageVo) {

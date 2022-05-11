@@ -19,6 +19,15 @@ public class TeacherService {
     private TeacherMapper teacherMapper;
 
     /**
+     * 列表查询
+     */
+    public List<TeacherVo> all() {
+        TeacherExample teacherExample = new TeacherExample();
+        List<Teacher> teacherList = teacherMapper.selectByExample(teacherExample);
+        return CopyUtil.copyList(teacherList, TeacherVo.class);
+    }
+
+    /**
      * 分页查询
      *
      * @param teacherPageVo

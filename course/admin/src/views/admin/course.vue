@@ -34,15 +34,16 @@
               <a href="#" class="blue">{{ course.name }}</a>
             </h3>
 
-            <!--            <div v-for="teacher in teachers.filter(t=>{return t.id===course.teacherId})" class="profile-activity clearfix">-->
-            <!--              <div>-->
-            <!--                <img v-show="!teacher.image" class="pull-left" src="/ace/assets/images/avatars/avatar5.png">-->
-            <!--                <img v-show="teacher.image" class="pull-left" v-bind:src="teacher.image">-->
-            <!--                <a class="user" href="#"> {{teacher.name}} </a>-->
-            <!--                <br>-->
-            <!--                {{teacher.position}}-->
-            <!--              </div>-->
-            <!--            </div>-->
+            <div v-for="teacher in teacherList.filter(t=>{return t.id===course.teacherId})"
+                 class="profile-activity clearfix">
+              <div>
+                <img v-show="!teacher.image" class="pull-left" src="/ace/assets/images/avatars/avatar5.png">
+                <img v-show="teacher.image" class="pull-left" v-bind:src="teacher.image">
+                <a class="user" href="#"> {{ teacher.name }} </a>
+                <br>
+                {{ teacher.position }}
+              </div>
+            </div>
 
             <p>
               <span class="blue bolder bigger-150">{{ course.price }}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
@@ -118,7 +119,7 @@
                 <label class="col-sm-2 control-label">讲师</label>
                 <div class="col-sm-10">
                   <select v-model="course.teacherId" class="form-control">
-                    <option v-for="o in teachers" v-bind:value="o.id">{{ o.name }}</option>
+                    <option v-for="o in teacherList" v-bind:value="o.id">{{ o.name }}</option>
                   </select>
                 </div>
               </div>
@@ -260,7 +261,7 @@ export default {
         oldSort: 0,
         newSort: 0
       },
-      teachers: [],
+      teacherList: [],
 
     }
   },
@@ -476,9 +477,10 @@ export default {
       let _this = this;
       Loading.show();
       _this.$axios.post(process.env.VUE_APP_SERVER + '/business/admin/teacher/all').then((response) => {
+        console.log("讲师列表", response);
         Loading.hide();
         let resp = response.data;
-        _this.teachers = resp.content;
+        _this.teacherList = resp.content;
       })
     },
 
