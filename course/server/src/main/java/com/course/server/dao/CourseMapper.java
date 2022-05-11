@@ -2,6 +2,7 @@ package com.course.server.dao;
 
 import com.course.server.entity.Course;
 import com.course.server.entity.CourseExample;
+import com.course.server.vo.SortVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,10 @@ public interface CourseMapper {
     int updateByPrimaryKeySelective(Course record);
 
     int updateByPrimaryKey(Course record);
+    //修改当前记录的排序值
+    int updateSort(SortVo sortVo);
+    // 如果排序值变大
+    int moveSortsBackward(SortVo sortVo);
+    // 如果排序值变小
+    int moveSortsForward(SortVo sortVo);
 }
