@@ -445,6 +445,13 @@
 <!--                  小节管理-->
 <!--                </router-link>-->
 <!--              </li>-->
+              <li id="business-teacher-sidebar">
+                <router-link to="/business/teacher">
+                  <i class="menu-icon fa fa-teacher-right"></i>
+                  讲师管理
+                </router-link>
+                <b class="arrow"></b>
+              </li>
 
             </ul>
           </li>

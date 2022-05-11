@@ -12,6 +12,7 @@ const Section = () => import("./views/admin/section.vue");
 const Course = () => import("./views/admin/course.vue");
 const AssetsInfo = () => import("./views/admin/assetsInfo");
 const Category = () => import("./views/admin/category");
+const Teacher = () => import("./views/admin/teacher");
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -48,6 +49,10 @@ const router = createRouter({
                 path: "business/category",
                 name: "business/category",
                 component: Category,
+            }, {
+                path: "business/teacher",
+                name: "business/teacher",
+                component: Teacher,
             }]
         }
     ]
