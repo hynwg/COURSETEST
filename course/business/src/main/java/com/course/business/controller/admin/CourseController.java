@@ -2,10 +2,7 @@ package com.course.business.controller.admin;
 
 import com.course.server.service.CourseCategoryService;
 import com.course.server.service.CourseService;
-import com.course.server.vo.CourseCategoryVo;
-import com.course.server.vo.CoursePageVo;
-import com.course.server.vo.CourseVo;
-import com.course.server.vo.ResponseVo;
+import com.course.server.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +67,13 @@ public class CourseController {
         ResponseVo responseDto = new ResponseVo();
         List<CourseCategoryVo> dtoList = courseCategoryService.listByCourse(courseId);
         responseDto.setContent(dtoList);
+        return responseDto;
+    }
+    @RequestMapping(value = "/sort")
+    public ResponseVo sort(@RequestBody SortVo sortVo) {
+        LOG.info("更新排序");
+        ResponseVo responseDto = new ResponseVo();
+        courseService.sort(sortVo);
         return responseDto;
     }
 }
