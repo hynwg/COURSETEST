@@ -17,8 +17,10 @@
       <div v-for="teacher in teacherList" class="col-md-3">
         <div>
           <span class="profile-picture">
-            <img v-show="!teacher.image" class="editable img-responsive editable-click editable-empty" src="/static/image/讲师头像/头像1.jpg" v-bind:title="teacher.intro"/>
-            <img v-show="teacher.image" class="editable img-responsive editable-click editable-empty" v-bind:src="teacher.image" v-bind:title="teacher.intro"/>
+            <img v-show="!teacher.image" class="editable img-responsive editable-click editable-empty"
+                 src="/static/image/讲师头像/头像1.jpg" v-bind:title="teacher.intro"/>
+            <img v-show="teacher.image" class="editable img-responsive editable-click editable-empty"
+                 v-bind:src="teacher.image" v-bind:title="teacher.intro"/>
           </span>
 
           <div class="space-4"></div>
@@ -28,7 +30,7 @@
               <a href="javascript:;" class="user-title-label dropdown-toggle" data-toggle="dropdown">
                 <i class="ace-icon fa fa-circle light-green"></i>
                 &nbsp;
-                <span class="white">{{teacher.position}}</span>
+                <span class="white">{{ teacher.position }}</span>
               </a>
             </div>
           </div>
@@ -39,7 +41,7 @@
         <div class="text-center">
           <a href="javascript:;" class="text-info bigger-110" v-bind:title="teacher.motto">
             <i class="ace-icon fa fa-user"></i>
-            {{teacher.name}}【{{teacher.nickname}}】
+            {{ teacher.name }}【{{ teacher.nickname }}】
           </a>
         </div>
 
@@ -85,16 +87,17 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">头像</label>
                 <div class="col-sm-10">
-                  <big-file v-bind:input-id="'image-upload'"
-                            v-bind:text="'上传头像'"
-                            v-bind:suffixs="['jpg', 'jpeg', 'png']"
-                            v-bind:use="FILE_USE.TEACHER.key"
-                            v-bind:after-upload="afterUpload"></big-file>
-                  <div v-show="teacher.image" class="row">
-                    <div class="col-md-4">
-                      <img v-bind:src="teacher.image" class="img-responsive">
-                    </div>
-                  </div>
+                  <input type="file" v-on:change="uploadImage()" id="file-upload-input">
+                  <!--                  <big-file v-bind:input-id="'image-upload'"-->
+                  <!--                            v-bind:text="'上传头像'"-->
+                  <!--                            v-bind:suffixs="['jpg', 'jpeg', 'png']"-->
+                  <!--                            v-bind:use="FILE_USE.TEACHER.key"-->
+                  <!--                            v-bind:after-upload="afterUpload"></big-file>-->
+                  <!--                  <div v-show="teacher.image" class="row">-->
+                  <!--                    <div class="col-md-4">-->
+                  <!--                      <img v-bind:src="teacher.image" class="img-responsive">-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
                 </div>
               </div>
               <div class="form-group">
@@ -228,6 +231,17 @@ export default {
       let _this = this;
       let image = resp.content.path;
       _this.teacher.image = image;
+    },
+    //上传头像
+    uploadImage() {
+      let _this = this;
+      let formData = new window.FormData();
+      formData.append("file", document.querySelector("#file-upload-input").files[0]);
+      Loading.show();
+      _this.$axios.post('http://127.0.0.1:9003/file/admin/upload/upload', formData).then((response) => {
+        Loading.hide();
+        let resp = response.data;
+      });
     }
   }
 }
