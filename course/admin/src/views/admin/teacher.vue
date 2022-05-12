@@ -61,7 +61,7 @@
 
       </div>
     </div>
-
+    <!--表单提交和保存-->
     <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -87,17 +87,16 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">头像</label>
                 <div class="col-sm-10">
-                  <input type="file" v-on:change="uploadImage()" id="file-upload-input">
-                  <!--                  <big-file v-bind:input-id="'image-upload'"-->
-                  <!--                            v-bind:text="'上传头像'"-->
-                  <!--                            v-bind:suffixs="['jpg', 'jpeg', 'png']"-->
-                  <!--                            v-bind:use="FILE_USE.TEACHER.key"-->
-                  <!--                            v-bind:after-upload="afterUpload"></big-file>-->
-                  <!--                  <div v-show="teacher.image" class="row">-->
-                  <!--                    <div class="col-md-4">-->
-                  <!--                      <img v-bind:src="teacher.image" class="img-responsive">-->
-                  <!--                    </div>-->
-                  <!--                  </div>-->
+                  <big-file v-bind:input-id="'image-upload'"
+                            v-bind:text="'上传头像'"
+                            v-bind:suffixs="['jpg', 'jpeg', 'png']"
+                            v-bind:use="FILE_USE.TEACHER.key"
+                            v-bind:after-upload="afterUpload"></big-file>
+                  <div v-show="teacher.image" class="row">
+                    <div class="col-md-4">
+                      <img v-bind:src="teacher.image" class="img-responsive">
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -130,13 +129,13 @@
   </div>
 </template>
 <script>
-import Pagination from "../../components/pagination";
 import BigFile from "../../components/big-file";
+import File from "../../components/file";
+import Pagination from "../../components/pagination";
 
 export default {
-  components: {Pagination},
+  components: {Pagination, File, BigFile},
   name: "business-teacher",
-  processData: false,
   data: function () {
     return {
       teacher: {},
@@ -229,20 +228,40 @@ export default {
     },
     afterUpload(resp) {
       let _this = this;
-      let image = resp.content.path;
+      let image = resp.content;
       _this.teacher.image = image;
-    },
-    //上传头像
-    uploadImage() {
-      let _this = this;
-      let formData = new window.FormData();
-      formData.append("file", document.querySelector("#file-upload-input").files[0]);
-      Loading.show();
-      _this.$axios.post('http://127.0.0.1:9003/file/admin/upload/upload', formData).then((response) => {
-        Loading.hide();
-        let resp = response.data;
-      });
     }
+    // //上传头像
+    // uploadImage() {
+    //   let _this = this;
+    //   //创建一个form对象
+    //   let formData = new window.FormData();
+    //   let file = _this.$refs.file.files[0];
+    //   //append 向form表单添加数据
+    //   formData.append("file", file);
+    //   let config = {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   }
+    //   Loading.show();
+    //   _this.$axios.post('http://127.0.0.1:9003/file/admin/upload', formData, config).then((response) => {
+    //     Loading.hide();
+    //     console.log("讲师头像列表 ", response);
+    //     let resp = response.data;
+    //     let image = resp.connect;//获取返回的路径
+    //     console.log("头像地址", image)
+    //     _this.teacher.image = image;//获取返回的路径赋值给teacher的image字段
+    //   });
+    // },
+    // selectImage() {
+    //   $("#file-upload-input").trigger("click");
+    // }
   }
 }
 </script>
+<style>
+/*.row {*/
+/*  display: block;*/
+/*}*/
+</style>

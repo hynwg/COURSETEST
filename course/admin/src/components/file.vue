@@ -65,6 +65,7 @@
           let resp = response.data;
           console.log("上传文件成功：", resp);
           _this.afterUpload(resp);
+          //清空id
           $("#" + _this.inputId + "-input").val("");
         });
       },

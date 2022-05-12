@@ -16,17 +16,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@RequestMapping("/admin/upload")
+@RequestMapping("/admin")
 @RestController
 public class UploadController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UploadController.class);
 
     public static final String BUSINESS_NAME = "文件上传";
-
+    //http://127.0.0.1:9003/file/f/
     @Value("${file.domain}")
     private String FILE_DOMAIN;
-
+    //D:/file/course/
     @Value("${file.path}")
     private String FILE_PATH;
 
@@ -41,6 +41,7 @@ public class UploadController {
 
     /**
      * 基本的文件上传
+     *
      * @param file
      * @return
      * @throws Exception
@@ -53,12 +54,13 @@ public class UploadController {
 
         // 保存文件到本地
         String fileName = file.getOriginalFilename();
-        String key = UuidUtil.getUuid();
-        String fullPath = "D:/file/course/teacher/" + key + "-" + fileName;
+        String key = UuidUtil.getShortUuid();
+        String fullPath = FILE_PATH+"teacher/" + key + "-" + fileName;
         File dest = new File(fullPath);
         file.transferTo(dest);
         LOG.info(dest.getAbsolutePath());
         ResponseVo responseVo = new ResponseVo();
+        responseVo.setContent(FILE_DOMAIN+"teacher/" + key + "-" + fileName);
         return responseVo;
     }
 
