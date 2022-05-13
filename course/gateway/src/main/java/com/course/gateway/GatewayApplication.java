@@ -24,25 +24,26 @@ public class GatewayApplication {
 		LOG.info("启动成功！！");
 		LOG.info("System地址: \thttp://127.0.0.1:{}", env.getProperty("server.port"));
 	}
-//	/**
-//	 * 配置跨域
-//	 * @return
-//	 */
-//	@Bean
-//	public CorsWebFilter corsFilter() {
-//		CorsConfiguration config = new CorsConfiguration();
-//
-//		config.setAllowCredentials(Boolean.TRUE);
-//		config.addAllowedMethod("*");
-//		config.addAllowedOriginPattern("*");
-//		config.addAllowedHeader("*");
-//		config.setMaxAge(3600L);
-//
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
-//		source.registerCorsConfiguration("/**", config);
-//
-//		return new CorsWebFilter(source);
-//	}
+
+	/**
+	 * 配置跨域
+	 * @return
+	 */
+	@Bean
+	public CorsWebFilter corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
+
+		config.setAllowCredentials(Boolean.TRUE);
+		config.addAllowedMethod("*");
+		config.addAllowedOriginPattern("*");
+		config.addAllowedHeader("*");
+		config.setMaxAge(3600L);
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
+		source.registerCorsConfiguration("/**", config);
+
+		return new CorsWebFilter(source);
+	}
 
 
 }
