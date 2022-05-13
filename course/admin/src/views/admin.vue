@@ -433,18 +433,18 @@
                 </router-link>
                 <b class="arrow"></b>
               </li>
-<!--              <li class="" id="business-chapter-sidebar">-->
-<!--                <router-link to="/business/chapter">-->
-<!--                  <i class="menu-icon fa fa-chapter-right"></i>-->
-<!--                  大章管理-->
-<!--                </router-link>-->
-<!--              </li>-->
-<!--              <li class="" id="business-section-sidebar">-->
-<!--                <router-link to="/business/section">-->
-<!--                  <i class="menu-icon fa fa-section-right"></i>-->
-<!--                  小节管理-->
-<!--                </router-link>-->
-<!--              </li>-->
+              <!--              <li class="" id="business-chapter-sidebar">-->
+              <!--                <router-link to="/business/chapter">-->
+              <!--                  <i class="menu-icon fa fa-chapter-right"></i>-->
+              <!--                  大章管理-->
+              <!--                </router-link>-->
+              <!--              </li>-->
+              <!--              <li class="" id="business-section-sidebar">-->
+              <!--                <router-link to="/business/section">-->
+              <!--                  <i class="menu-icon fa fa-section-right"></i>-->
+              <!--                  小节管理-->
+              <!--                </router-link>-->
+              <!--              </li>-->
               <li id="business-teacher-sidebar">
                 <router-link to="/business/teacher">
                   <i class="menu-icon fa fa-teacher-right"></i>
@@ -453,6 +453,22 @@
                 <b class="arrow"></b>
               </li>
 
+            </ul>
+          </li>
+          <li class="active open">
+            <a href="#" class="dropdown-toggle">
+              <i class="menu-icon fa fa-list"></i>
+              <span class="menu-text"> 文件管理 </span>
+              <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+              <li class="">
+                <router-link to="/file/fileInfo">
+                  <i class="menu-icon fa fa-fileInfo-right"></i>
+                  文件管理
+                </router-link>
+              </li>
             </ul>
           </li>
         </ul><!-- /.nav-list -->
@@ -516,6 +532,7 @@
 import $ from 'jquery'
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "admin",
   mounted: function () {
     //let _this = this;

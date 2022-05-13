@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.*;
 
 public class ServerGenerator {
-    static String MODULE = "business";
+    static String MODULE = "file";
     static String toVoPath = "server\\src\\main\\java\\com\\course\\server\\vo\\";
     static String toServicePath = "server\\src\\main\\java\\com\\course\\server\\service\\";
     static String toControllerPath = MODULE + "\\src\\main\\java\\com\\course\\" + MODULE + "\\controller\\admin\\";

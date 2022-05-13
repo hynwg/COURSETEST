@@ -13,6 +13,7 @@ const Course = () => import("./views/admin/course.vue");
 const AssetsInfo = () => import("./views/admin/assetsInfo");
 const Category = () => import("./views/admin/category");
 const Teacher = () => import("./views/admin/teacher");
+const FileInfo = () => import("./views/admin/fileInfo");
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -53,6 +54,10 @@ const router = createRouter({
                 path: "business/teacher",
                 name: "business/teacher",
                 component: Teacher,
+            }, {
+                path: "file/fileInfo",
+                name: "file/fileInfo",
+                component: FileInfo,
             }]
         }
     ]

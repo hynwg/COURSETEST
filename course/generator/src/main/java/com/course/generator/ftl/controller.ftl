@@ -52,7 +52,7 @@ public class ${Domain}Controller {
      * @return
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseVo delete(@PathVariable String id) {
+    public ResponseVo delete(@PathVariable Integer id) {
         ResponseVo responseVo = new ResponseVo();
         ${domain}Service.delete(id);
         return responseVo;

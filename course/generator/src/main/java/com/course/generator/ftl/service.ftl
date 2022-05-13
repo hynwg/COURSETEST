@@ -86,7 +86,7 @@ public class ${Domain}Service {
      *
      * @param id
      */
-    public void delete(String id) {
+    public void delete(Integer id) {
         ${domain}Mapper.deleteByPrimaryKey(id);
     }
 }
